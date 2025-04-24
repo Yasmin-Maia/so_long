@@ -5,28 +5,73 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yasmin <yasmin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/15 13:21:44 by yasmin            #+#    #+#             */
-/*   Updated: 2025/04/17 17:56:53 by yasmin           ###   ########.fr       */
+/*   Created: 2025/04/24 18:48:15 by yasmin            #+#    #+#             */
+/*   Updated: 2025/04/24 18:49:54 by yasmin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+void	load_sprites(t_game *game)
+{
+	int w, h;
+
+	game->player = mlx_xpm_file_to_image(game->mlx, "sprites/player.xpm", &w, &h);
+	game->wall = mlx_xpm_file_to_image(game->mlx, "sprites/wall.xpm", &w, &h);
+	game->collect = mlx_xpm_file_to_image(game->mlx, "sprites/blood_vial.xpm", &w, &h);
+	game->exit = mlx_xpm_file_to_image(game->mlx, "sprites/exit.xpm", &w, &h);
+	game->floor = mlx_xpm_file_to_image(game->mlx, "sprites/mystic_floor.xpm", &w, &h);
+
+	if (!game->player || !game->wall || !game->collect || !game->exit || !game->floor)
+		error_exit("Erro ao carregar um ou mais sprites");
+}
+
+void	draw_map(t_game *game)
+{
+	int y = 0;
+	int x;
+
+	while (game->map[y])
+	{
+		x = 0;
+		while (game->map[y][x])
+		{
+			char tile = game->map[y][x];
+
+			// Primeiro desenha o chão
+			mlx_put_image_to_window(game->mlx, game->win, game->floor, x * TILE, y * TILE);
+
+			if (tile == '1')
+				mlx_put_image_to_window(game->mlx, game->win, game->wall, x * TILE, y * TILE);
+			else if (tile == 'P')
+				mlx_put_image_to_window(game->mlx, game->win, game->player, x * TILE, y * TILE);
+			else if (tile == 'C')
+				mlx_put_image_to_window(game->mlx, game->win, game->collect, x * TILE, y * TILE);
+			else if (tile == 'E')
+				mlx_put_image_to_window(game->mlx, game->win, game->exit, x * TILE, y * TILE);
+			x++;
+		}
+		y++;
+	}
+}
+
 int	main(int ac, char **av)
 {
 	t_game	game;
-	int		i;
 
-	i = 0;
 	if (ac != 2)
-		error_exit("error");
+		error_exit("Uso: ./so_long map.ber");
+
 	game.map = read_map(av[1]);
-	if(!validate_map(game.map))
-		error_exit("Invalid map");
-	while (game.map[i])
-	{
-		ft_putstr_fd(game.map[i], 1);
-		i++;
-	}
+	if (!validate_map(game.map))
+		error_exit("Mapa inválido!");
+
+	game.mlx = mlx_init();
+	game.win = mlx_new_window(game.mlx, TILE * 5, TILE * 4, "So Long");
+
+	load_sprites(&game);
+	draw_map(&game);
+
+	mlx_loop(game.mlx);
 	return (0);
 }

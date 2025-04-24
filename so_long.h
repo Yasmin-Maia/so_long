@@ -6,7 +6,7 @@
 /*   By: yasmin <yasmin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:22:18 by yasmin            #+#    #+#             */
-/*   Updated: 2025/04/17 17:21:48 by yasmin           ###   ########.fr       */
+/*   Updated: 2025/04/24 18:38:02 by yasmin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <fcntl.h> // open
 # include <unistd.h> // close
 
+# define TILE 32
+
 typedef struct s_pos
 {
 	int	x;
@@ -29,21 +31,27 @@ typedef struct s_pos
 
 typedef struct s_game
 {
-	char	**map;
-	int		map_width;
-	int		map_height;
+    char    **map;
+    int     map_width;
+    int     map_height;
 
-	int		num_collect;
-	int		collectec;
-	int		moves;
+    int     num_collect;
+    int     collectec;
+    int     moves;
 
-	t_pos	player_pos;
-	t_pos	exit_pos;
+    t_pos   player_pos;
+    t_pos   exit_pos;
 
-	void	*mlx;
-	void	*win;
+    void    *mlx;
+    void    *win;
+
+    // Adicionar os campos para os sprites
+    void    *player;
+    void    *wall;
+    void    *collect;
+    void    *exit;
+    void    *floor;
 } t_game;
-
 
 void	error_exit(char *msg);
 
