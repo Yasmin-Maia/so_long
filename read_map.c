@@ -6,7 +6,7 @@
 /*   By: yasmin <yasmin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 14:21:53 by yasmin            #+#    #+#             */
-/*   Updated: 2025/04/30 15:33:39 by yasmin           ###   ########.fr       */
+/*   Updated: 2025/04/30 19:29:18 by yasmin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	get_map_width(char *file)
 	if (fd < 0)
 		error_exit("Error to open map");
 	line = get_next_line(fd);
-	if(!line)
+	if (!line)
 		error_exit("Empty map file");
 	while (line[width] && line[width] != '\n')
 		width++;
@@ -54,7 +54,6 @@ int	get_map_width(char *file)
 	return (width);
 }
 
-// read map and put in char**
 char	**read_map(char *file)
 {
 	int		fd;
@@ -86,9 +85,10 @@ char	**read_map(char *file)
 
 void	find_player_position(t_game *game)
 {
-	int	y = 0;
+	int	y;
 	int	x;
 
+	y = 0;
 	while (game->map[y])
 	{
 		x = 0;

@@ -6,7 +6,7 @@
 #    By: yasmin <yasmin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/15 10:12:33 by yasmin            #+#    #+#              #
-#    Updated: 2025/04/30 15:20:31 by yasmin           ###   ########.fr        #
+#    Updated: 2025/04/30 20:14:42 by yasmin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ MLX_SYS = -lXext -lX11
 INCLUDES = -I. $(LIBFT_INC) $(MLX_INC)
 LIBS = $(LIBFT) $(MLX_LIB) $(MLX_SYS)
 
-SRCS = main.c read_map.c validate_map.c error.c movement.c
+SRCS = main.c read_map.c validate_map_utils.c validate_map.c error.c movement.c
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
