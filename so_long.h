@@ -6,7 +6,7 @@
 /*   By: yasmin <yasmin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:22:18 by yasmin            #+#    #+#             */
-/*   Updated: 2025/04/30 16:31:00 by yasmin           ###   ########.fr       */
+/*   Updated: 2025/04/30 17:59:24 by yasmin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <fcntl.h> // open
 # include <unistd.h> // close
 
-# define TILE 128
+# define TILE 64
 
 typedef struct s_pos
 {
