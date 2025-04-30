@@ -6,24 +6,24 @@
 /*   By: yasmin <yasmin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 14:21:53 by yasmin            #+#    #+#             */
-/*   Updated: 2025/04/17 18:02:44 by yasmin           ###   ########.fr       */
+/*   Updated: 2025/04/30 15:33:39 by yasmin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
 // count lines of map
-static int	get_map_height(char *file)
+int	get_map_height(char *file)
 {
 	int		fd;
 	int		height;
 	char	*line;
 
 	fd = open(file, O_RDONLY);
-	height = 0;
-	line = get_next_line(fd);
 	if (fd < 0)
 		error_exit("Error to open map");
+	height = 0;
+	line = get_next_line(fd);
 	while (line)
 	{
 		free(line);
@@ -32,6 +32,26 @@ static int	get_map_height(char *file)
 	}
 	close(fd);
 	return (height);
+}
+
+int	get_map_width(char *file)
+{
+	int		fd;
+	int		width;
+	char	*line;
+
+	fd = open(file, O_RDONLY);
+	width = 0;
+	if (fd < 0)
+		error_exit("Error to open map");
+	line = get_next_line(fd);
+	if(!line)
+		error_exit("Empty map file");
+	while (line[width] && line[width] != '\n')
+		width++;
+	free(line);
+	close(fd);
+	return (width);
 }
 
 // read map and put in char**
@@ -62,4 +82,27 @@ char	**read_map(char *file)
 	map[i] = NULL;
 	close(fd);
 	return (map);
+}
+
+void	find_player_position(t_game *game)
+{
+	int	y = 0;
+	int	x;
+
+	while (game->map[y])
+	{
+		x = 0;
+		while (game->map[y][x])
+		{
+			if (game->map[y][x] == 'P')
+			{
+				game->player_pos.x = x;
+				game->player_pos.y = y;
+				return ;
+			}
+			x++;
+		}
+		y++;
+	}
+	error_exit("Posição inicial do jogador não encontrada!");
 }

@@ -6,7 +6,7 @@
 /*   By: yasmin <yasmin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 18:48:15 by yasmin            #+#    #+#             */
-/*   Updated: 2025/04/24 18:49:54 by yasmin           ###   ########.fr       */
+/*   Updated: 2025/04/30 15:34:54 by yasmin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,14 @@ int	main(int ac, char **av)
 	game.map = read_map(av[1]);
 	if (!validate_map(game.map))
 		error_exit("Mapa inválido!");
-
+	game.map_width = get_map_width(av[1]);
+	game.map_height = get_map_height(av[1]);
+	find_player_position(&game);
 	game.mlx = mlx_init();
-	game.win = mlx_new_window(game.mlx, TILE * 5, TILE * 4, "So Long");
-
+	game.win = mlx_new_window(game.mlx, TILE * get_map_width(av[1]), TILE * get_map_height(av[1]), "So Long");
 	load_sprites(&game);
 	draw_map(&game);
-
+	mlx_key_hook(game.win, handle_keypress, &game);
 	mlx_loop(game.mlx);
 	return (0);
 }
