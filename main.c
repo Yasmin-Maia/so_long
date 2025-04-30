@@ -6,7 +6,7 @@
 /*   By: yasmin <yasmin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 18:48:15 by yasmin            #+#    #+#             */
-/*   Updated: 2025/04/30 15:34:54 by yasmin           ###   ########.fr       */
+/*   Updated: 2025/04/30 16:43:02 by yasmin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,12 @@ int	main(int ac, char **av)
 {
 	t_game	game;
 
+	ft_memset(&game, 0, sizeof(t_game));
 	if (ac != 2)
 		error_exit("Uso: ./so_long map.ber");
-
 	game.map = read_map(av[1]);
+	game.num_collect = count_collectibles(game.map);
+	game.collectec = 0;
 	if (!validate_map(game.map))
 		error_exit("Mapa inválido!");
 	game.map_width = get_map_width(av[1]);

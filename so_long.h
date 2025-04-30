@@ -6,7 +6,7 @@
 /*   By: yasmin <yasmin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:22:18 by yasmin            #+#    #+#             */
-/*   Updated: 2025/04/30 15:34:23 by yasmin           ###   ########.fr       */
+/*   Updated: 2025/04/30 16:31:00 by yasmin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,11 @@ int     get_map_width(char *file);
 void	find_player_position(t_game *game);
 
 void	draw_map(t_game *game);
-int	main(int ac, char **av);
+int     main(int ac, char **av);
 
 int	validate_map(char **map);
 
 int handle_keypress(int keycode, t_game *game);
+int	count_collectibles(char **map);
 
 #endif

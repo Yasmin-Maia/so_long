@@ -6,7 +6,7 @@
 /*   By: yasmin <yasmin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:46:47 by yasmin            #+#    #+#             */
-/*   Updated: 2025/04/30 15:50:49 by yasmin           ###   ########.fr       */
+/*   Updated: 2025/04/30 16:36:29 by yasmin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void move_player(t_game *game, int dx, int dy)
 		return ;
 	if (next_tile == 'E' && game->collectec == game->num_collect)
 	{
-		ft_printf("Congratulations! You won in %d movements.", game->moves + 1);
+		ft_printf("Congratulations! You won in %d movements.\n", game->moves + 1);
 		exit(0);
 	}
 	if (game->map[game->player_pos.y][game->player_pos.x] != 'E')
@@ -57,4 +57,24 @@ int handle_keypress(int keycode, t_game *game)
 		move_player(game, 1, 0);
 	draw_map(game);
 	return (0);
+}
+
+int	count_collectibles(char **map)
+{
+	int y = 0;
+	int x;
+	int count = 0;
+
+	while (map[y])
+	{
+		x = 0;
+		while (map[y][x])
+		{
+			if (map[y][x] == 'C')
+				count++;
+			x++;
+		}
+		y++;
+	}
+	return (count);
 }
