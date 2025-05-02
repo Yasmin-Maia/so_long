@@ -5,58 +5,65 @@
 #                                                     +:+ +:+         +:+      #
 #    By: yasmin <yasmin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/04/15 10:12:33 by yasmin            #+#    #+#              #
-#    Updated: 2025/05/02 15:51:53 by yasmin           ###   ########.fr        #
+#    Created: 2025/05/02 16:45:00 by yasmin            #+#    #+#              #
+#    Updated: 2025/05/02 17:42:22 by yasmin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
 
 NAME = so_long
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 
+# Directorio
 LIBFT_DIR = ./libft
-LIBFT = $(LIBFT_DIR)/libft.a
-LIBFT_INC = -I$(LIBFT_DIR)
-
+LIBFT_A = $(LIBFT_DIR)/libft.a
+LIBFT_INC = -I$(LIBFT_DIR) -I$(LIBFT_DIR)/get_next_line
 MLX_DIR = ./mlx
-MLX_LIB = -L$(MLX_DIR) -lmlx
-MLX_INC = -I$(MLX_DIR)
-MLX_SYS = -lXext -lX11
+FT_PRINTF_DIR = ./libft/ft_printf
+GNL_DIR = ./libft/get_next_line
 
-INCLUDES = -I. $(LIBFT_INC) $(MLX_INC)
-LIBS = $(LIBFT) $(MLX_LIB) $(MLX_SYS)
-
+# Sources and Objects
 SRCS = main.c read_map.c validate_map_utils.c validate_map.c error.c movement.c
 OBJS = $(SRCS:.c=.o)
 
-all: check_libft $(NAME)
+# Get_next_line and Ft_printf
+FT_PRINTF_OBJ = $(FT_PRINTF_DIR)/ft_printf.o $(FT_PRINTF_DIR)/ft_printf_utils.o
+GNL_OBJ = $(GNL_DIR)/get_next_line.o $(GNL_DIR)/get_next_line_utils.o
 
-check_libft:
-	@if [ -d $(LIBFT_DIR) ]; then \
-		echo "[libft] Pasta encontrada."; \
-	else \
-		echo "Clonando libft..."; \
-		git clone git@github.com:Yasmin-Maia/libft.git $(LIBFT_DIR); \
-		echo "Clonagem concluída."; \
+# Includes
+INCLUDES = -I. $(LIBFT_INC) -I$(MLX_DIR)
+LIBS = $(LIBFT_A) -L$(MLX_DIR) -lmlx -lXext -lX11
+
+LIBFT_REPO = git@github.com:Yasmin-Maia/libft.git
+
+all: $(LIBFT_A) $(NAME)
+
+# Check if libft exists, if not, to clone the repository
+$(LIBFT_A):
+	@if [ ! -d "$(LIBFT_DIR)" ]; then \
+		echo "Libft não encontrada, clonando..."; \
+		git clone $(LIBFT_REPO) $(LIBFT_DIR); \
 	fi
-	@make -C $(LIBFT_DIR)
+	@echo "Compilando libft..."
+	@$(MAKE) -C $(LIBFT_DIR)
 
-$(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LIBS) -o $(NAME)
+# Comple so_long
+$(NAME): $(OBJS) $(FT_PRINTF_OBJ) $(GNL_OBJ)
+	@$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LIBS) -o $(NAME)
 
+# Comple objects
 %.o: %.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
-	@make -C $(LIBFT_DIR) clean
-	rm -f $(OBJS)
+	@$(MAKE) -C $(LIBFT_DIR) clean
+	@rm -f $(OBJS)
 
 fclean: clean
-	@make -C $(LIBFT_DIR) fclean
-	rm -f $(NAME)
+	@$(MAKE) -C $(LIBFT_DIR) fclean
+	@rm -f $(NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean re check_libft
+.PHONY: all clean fclean re

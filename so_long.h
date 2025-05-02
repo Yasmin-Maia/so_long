@@ -6,7 +6,7 @@
 /*   By: yasmin <yasmin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:22:18 by yasmin            #+#    #+#             */
-/*   Updated: 2025/04/30 20:14:12 by yasmin           ###   ########.fr       */
+/*   Updated: 2025/05/02 16:28:15 by yasmin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "../libft/libft.h"
 # include "../mlx/mlx.h"
-# include "../libft/get_next_line/get_next_line.h"
+# include "get_next_line/get_next_line.h"
 # include "../libft/ft_printf/ft_printf.h"
 # include <stdlib.h>
 # include <fcntl.h> // open
