@@ -6,7 +6,7 @@
 #    By: yasmin <yasmin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/15 10:12:33 by yasmin            #+#    #+#              #
-#    Updated: 2025/04/30 20:14:42 by yasmin           ###   ########.fr        #
+#    Updated: 2025/05/02 15:51:53 by yasmin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,16 +31,23 @@ LIBS = $(LIBFT) $(MLX_LIB) $(MLX_SYS)
 SRCS = main.c read_map.c validate_map_utils.c validate_map.c error.c movement.c
 OBJS = $(SRCS:.c=.o)
 
-all: $(NAME)
+all: check_libft $(NAME)
+
+check_libft:
+	@if [ -d $(LIBFT_DIR) ]; then \
+		echo "[libft] Pasta encontrada."; \
+	else \
+		echo "Clonando libft..."; \
+		git clone git@github.com:Yasmin-Maia/libft.git $(LIBFT_DIR); \
+		echo "Clonagem concluída."; \
+	fi
+	@make -C $(LIBFT_DIR)
 
 $(NAME): $(OBJS) $(LIBFT)
 	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LIBS) -o $(NAME)
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
-
-$(LIBFT):
-	make -C $(LIBFT_DIR)
 
 clean:
 	@make -C $(LIBFT_DIR) clean
@@ -52,4 +59,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re check_libft
