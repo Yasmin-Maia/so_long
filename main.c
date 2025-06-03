@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yasmin <yasmin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ymaia-do <ymaia-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 18:48:15 by yasmin            #+#    #+#             */
-/*   Updated: 2025/04/30 19:20:14 by yasmin           ###   ########.fr       */
+/*   Updated: 2025/06/03 15:41:12 by ymaia-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,6 @@ int	main(int ac, char **av)
 	draw_map(&game);
 	mlx_key_hook(game.win, handle_keypress, &game);
 	mlx_loop(game.mlx);
+	free_all(&game);
 	return (0);
 }
