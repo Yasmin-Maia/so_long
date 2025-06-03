@@ -3,14 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   read_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yasmin <yasmin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ymaia-do <ymaia-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 14:21:53 by yasmin            #+#    #+#             */
-/*   Updated: 2025/04/30 19:29:18 by yasmin           ###   ########.fr       */
+/*   Updated: 2025/06/03 19:17:12 by ymaia-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+void	gnl_clear(int fd)
+{
+    char	*buffer;
+    
+    while (1)
+    {
+        buffer = get_next_line(fd);
+        if (!buffer)
+            break;
+        free(buffer);
+    }
+}
 
 // count lines of map
 int	get_map_height(char *file)
@@ -30,6 +43,9 @@ int	get_map_height(char *file)
 		height++;
 		line = get_next_line(fd);
 	}
+	close(fd);
+	fd = open(file, O_RDONLY);
+	gnl_clear(fd);
 	close(fd);
 	return (height);
 }
@@ -73,8 +89,15 @@ char	**read_map(char *file)
 	{
 		map[i] = get_next_line(fd);
 		if (!map[i])
+		{
+			while (i > 0)
+			{
+				free(map[--i]);
+			}
+			free(map);			
 			error_exit("Error reading the map line.");
-		if (map[i][ft_strlen(map[i]) - 1] == '\n')
+		}
+			if (map[i][ft_strlen(map[i]) - 1] == '\n')
 			map[i][ft_strlen(map[i]) - 1] = '\0';
 		i++;
 	}

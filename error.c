@@ -6,7 +6,7 @@
 /*   By: ymaia-do <ymaia-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:07:18 by yasmin            #+#    #+#             */
-/*   Updated: 2025/06/03 15:59:09 by ymaia-do         ###   ########.fr       */
+/*   Updated: 2025/06/03 19:07:56 by ymaia-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,28 +34,33 @@ void	free_map(char **map)
 void	destroy_images(t_game *game)
 {
 	if (game->player)
-		mlx_destroy_image(game->mlx, game->player);
+	mlx_destroy_image(game->mlx, game->player);
 	if (game->wall)
-		mlx_destroy_image(game->mlx, game->wall);
+	mlx_destroy_image(game->mlx, game->wall);
 	if (game->collect)
-		mlx_destroy_image(game->mlx, game->collect);
+	mlx_destroy_image(game->mlx, game->collect);
 	if (game->exit)
-		mlx_destroy_image(game->mlx, game->exit);
+	mlx_destroy_image(game->mlx, game->exit);
 	if (game->floor)
-		mlx_destroy_image(game->mlx, game->floor);
+	mlx_destroy_image(game->mlx, game->floor);
+	if (game->win)
+		mlx_destroy_window(game->mlx, game->win);
 }
 
 void	free_all(t_game *game)
 {
+	if (!game)
+		return ;
 	if (game->map)
 		free_map(game->map);
 	if (game->mlx)
 	{
 		destroy_images(game);
-		if (game->win)
-			mlx_destroy_window(game->mlx, game->win);
-		mlx_destroy_display(game->mlx);
-		free(game->mlx);
+		if (game->mlx)
+		{
+			mlx_destroy_display(game->mlx);
+			free(game->mlx);
+		}
 	}
 	exit (0);
 }

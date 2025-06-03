@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yasmin <yasmin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ymaia-do <ymaia-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:46:47 by yasmin            #+#    #+#             */
-/*   Updated: 2025/04/30 19:27:26 by yasmin           ###   ########.fr       */
+/*   Updated: 2025/06/03 18:49:25 by ymaia-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static void	check_victory(t_game *game, char next_tile)
 	{
 		ft_printf("Congratulations! You won in %d movements.\n",
 			game->moves + 1);
+		free_all(game);
 		exit(0);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ymaia-do <ymaia-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 18:48:15 by yasmin            #+#    #+#             */
-/*   Updated: 2025/06/03 15:41:12 by ymaia-do         ###   ########.fr       */
+/*   Updated: 2025/06/03 19:09:30 by ymaia-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,13 @@ void	draw_map(t_game *game)
 	}
 }
 
+int close_window(t_game *game)
+{
+	free_all(game);
+	exit(0);
+	return (0);
+}
+
 int	main(int ac, char **av)
 {
 	t_game	game;
@@ -81,7 +88,10 @@ int	main(int ac, char **av)
 	game.num_collect = count_collectibles(game.map);
 	game.collectec = 0;
 	if (!validate_map(game.map))
-		error_exit("Mapa inválido!");
+	{
+		free_map(game.map);
+		error_exit("Invalid map!");
+	}
 	game.map_width = get_map_width(av[1]);
 	game.map_height = get_map_height(av[1]);
 	find_player_position(&game);
@@ -91,7 +101,7 @@ int	main(int ac, char **av)
 	load_sprites(&game);
 	draw_map(&game);
 	mlx_key_hook(game.win, handle_keypress, &game);
+	mlx_hook(game.win, 17, 0, close_window, &game);
 	mlx_loop(game.mlx);
-	free_all(&game);
 	return (0);
 }
