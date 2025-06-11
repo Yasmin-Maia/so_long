@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymaia-do <ymaia-do@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yasmin <yasmin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:22:18 by yasmin            #+#    #+#             */
-/*   Updated: 2025/06/03 15:40:55 by ymaia-do         ###   ########.fr       */
+/*   Updated: 2025/06/11 19:22:56 by yasmin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@
 
 # define TILE 64
 
+typedef struct s_flood
+{
+	int	collectibles;
+	int	exit_reachable;
+}	t_flood;
+
 typedef struct s_pos
 {
 	int	x;
@@ -38,6 +44,9 @@ typedef struct s_game
 	int		num_collect;
 	int		collectec;
 	int		moves;
+
+	int		player_x;
+	int		player_y;
 
 	t_pos	player_pos;
 
@@ -61,19 +70,24 @@ char	**read_map(char *file);
 int		get_map_height(char *file);
 int		get_map_width(char *file);
 void	find_player_position(t_game *game);
+void	count_map_dimensions(t_game *game);
 
 void	draw_map(t_game *game);
 int		main(int ac, char **av);
+int		init_game(t_game *game);
 
-int		validate_map(char **map);
+
+int	validate_map(t_game *game);
 
 int		retangular_map(char **map);
 void	elements(char **map, int *player, int *exit, int *collectible);
 int		required_elements(char **map);
 int		check_top_bottom(char *line);
-int		check_surrounded(char **map);
 
 int		handle_keypress(int keycode, t_game *game);
 int		count_collectibles(char **map);
+
+int		validate_path(t_game *game);
+int		validate_char(char **map);
 
 #endif

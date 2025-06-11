@@ -6,7 +6,7 @@
 #    By: yasmin <yasmin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/02 16:45:00 by yasmin            #+#    #+#              #
-#    Updated: 2025/05/02 17:42:22 by yasmin           ###   ########.fr        #
+#    Updated: 2025/06/10 18:35:03 by yasmin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ FT_PRINTF_DIR = ./libft/ft_printf
 GNL_DIR = ./libft/get_next_line
 
 # Sources and Objects
-SRCS = main.c read_map.c validate_map_utils.c validate_map.c error.c movement.c
+SRCS = main.c read_map.c validate_map_utils.c validate_map.c error.c movement.c flood_fill.c
 OBJS = $(SRCS:.c=.o)
 
 # Get_next_line and Ft_printf

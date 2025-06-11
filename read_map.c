@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymaia-do <ymaia-do@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yasmin <yasmin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 14:21:53 by yasmin            #+#    #+#             */
-/*   Updated: 2025/06/03 19:17:12 by ymaia-do         ###   ########.fr       */
+/*   Updated: 2025/06/11 18:57:47 by yasmin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,24 +50,17 @@ int	get_map_height(char *file)
 	return (height);
 }
 
-int	get_map_width(char *file)
+void	count_map_dimensions(t_game *game)
 {
-	int		fd;
-	int		width;
-	char	*line;
-
-	fd = open(file, O_RDONLY);
-	width = 0;
-	if (fd < 0)
-		error_exit("Error to open map");
-	line = get_next_line(fd);
-	if (!line)
-		error_exit("Empty map file");
-	while (line[width] && line[width] != '\n')
-		width++;
-	free(line);
-	close(fd);
-	return (width);
+	game->map_height = 0;
+	while (game->map[game->map_height])
+		game->map_height++;
+	game->map_width = ft_strlen(game->map[0]);
+	if (game->map[0][game->map_width - 1] == '\n')
+		game->map_width--;
+	game->collectec = 0;
+	game->num_collect = 0;
+	game->moves = 0;
 }
 
 char	**read_map(char *file)
