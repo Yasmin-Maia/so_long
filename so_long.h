@@ -6,7 +6,7 @@
 /*   By: yasmin <yasmin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:22:18 by yasmin            #+#    #+#             */
-/*   Updated: 2025/06/11 19:22:56 by yasmin           ###   ########.fr       */
+/*   Updated: 2025/06/12 15:33:18 by yasmin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@
 # include <stdlib.h>
 # include <fcntl.h> // open
 # include <unistd.h> // close
-
-# define TILE 64
 
 typedef struct s_flood
 {
@@ -38,6 +36,7 @@ typedef struct s_pos
 typedef struct s_game
 {
 	char	**map;
+	char	*map_file;
 	int		map_width;
 	int		map_height;
 
@@ -89,5 +88,6 @@ int		count_collectibles(char **map);
 
 int		validate_path(t_game *game);
 int		validate_char(char **map);
+void	gnl_clear(int fd);
 
 #endif

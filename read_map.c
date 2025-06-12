@@ -6,7 +6,7 @@
 /*   By: yasmin <yasmin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 14:21:53 by yasmin            #+#    #+#             */
-/*   Updated: 2025/06/11 18:57:47 by yasmin           ###   ########.fr       */
+/*   Updated: 2025/06/12 16:20:32 by yasmin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 void	gnl_clear(int fd)
 {
     char	*buffer;
-    
+
+	if (fd < 0)
+		return ;
     while (1)
     {
         buffer = get_next_line(fd);
@@ -23,6 +25,9 @@ void	gnl_clear(int fd)
             break;
         free(buffer);
     }
+	buffer =	get_next_line(-1);
+	if (buffer)
+		free(buffer);
 }
 
 // count lines of map
@@ -59,44 +64,47 @@ void	count_map_dimensions(t_game *game)
 	if (game->map[0][game->map_width - 1] == '\n')
 		game->map_width--;
 	game->collectec = 0;
-	game->num_collect = 0;
 	game->moves = 0;
 }
 
-char	**read_map(char *file)
+char **read_map(char *file)
 {
-	int		fd;
-	int		i;
-	int		height;
-	char	**map;
+    int     fd;
+    int     i;
+    int     height;
+    char    **map;
 
-	height = get_map_height(file);
-	fd = open(file, O_RDONLY);
-	if (fd < 0)
-		error_exit("Error to open map");
-	map = malloc(sizeof(char *) * (height + 1));
-	if (!map)
-		error_exit("memory error");
-	i = 0;
-	while (i < height)
-	{
-		map[i] = get_next_line(fd);
-		if (!map[i])
-		{
-			while (i > 0)
-			{
-				free(map[--i]);
-			}
-			free(map);			
-			error_exit("Error reading the map line.");
-		}
-			if (map[i][ft_strlen(map[i]) - 1] == '\n')
-			map[i][ft_strlen(map[i]) - 1] = '\0';
-		i++;
-	}
-	map[i] = NULL;
-	close(fd);
-	return (map);
+    height = get_map_height(file);
+    fd = open(file, O_RDONLY);
+    if (fd < 0)
+        error_exit("Error to open map");
+    map = malloc(sizeof(char *) * (height + 1));
+    if (!map)
+    {
+        close(fd);
+        error_exit("memory error");
+    }
+    i = 0;
+    while (i < height)
+    {
+        map[i] = get_next_line(fd);
+        if (!map[i])
+        {
+            while (i > 0)
+                free(map[--i]);
+            free(map);
+            gnl_clear(fd);
+            close(fd);
+            error_exit("Error reading the map line.");
+        }
+        if (map[i][ft_strlen(map[i]) - 1] == '\n')
+            map[i][ft_strlen(map[i]) - 1] = '\0';
+        i++;
+    }
+    map[i] = NULL;
+    gnl_clear(fd);  // Clear GNL buffers before closing
+    close(fd);
+    return (map);
 }
 
 void	find_player_position(t_game *game)

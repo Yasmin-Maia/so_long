@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymaia-do <ymaia-do@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yasmin <yasmin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:07:18 by yasmin            #+#    #+#             */
-/*   Updated: 2025/06/03 19:07:56 by ymaia-do         ###   ########.fr       */
+/*   Updated: 2025/06/12 16:20:44 by yasmin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ void	free_map(char **map)
 		return ;
 	i = 0;
 	while (map[i])
-		free(map[i++]);
+	{
+		free(map[i]);
+		i++;
+	}
 	free(map);
 }
 
@@ -43,24 +46,24 @@ void	destroy_images(t_game *game)
 	mlx_destroy_image(game->mlx, game->exit);
 	if (game->floor)
 	mlx_destroy_image(game->mlx, game->floor);
-	if (game->win)
-		mlx_destroy_window(game->mlx, game->win);
 }
 
-void	free_all(t_game *game)
+void free_all(t_game *game)
 {
-	if (!game)
-		return ;
-	if (game->map)
-		free_map(game->map);
-	if (game->mlx)
-	{
-		destroy_images(game);
-		if (game->mlx)
-		{
-			mlx_destroy_display(game->mlx);
-			free(game->mlx);
-		}
-	}
-	exit (0);
+    if (!game)
+        return;
+    
+    // Free the map first
+    if (game->map)
+        free_map(game->map);
+
+    // Free graphics resources in correct order
+    if (game->mlx)
+    {
+        destroy_images(game);
+        if (game->win)
+            mlx_destroy_window(game->mlx, game->win);
+        mlx_destroy_display(game->mlx);
+        free(game->mlx);
+    }
 }

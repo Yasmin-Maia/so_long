@@ -6,7 +6,7 @@
 /*   By: yasmin <yasmin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 18:48:15 by yasmin            #+#    #+#             */
-/*   Updated: 2025/06/11 19:23:19 by yasmin           ###   ########.fr       */
+/*   Updated: 2025/06/12 16:29:11 by yasmin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,16 @@ static void	put_tile_image(t_game *game, char tile, int x, int y)
 {
 	if (tile == '1')
 		mlx_put_image_to_window(game->mlx, game->win,
-			game->wall, x * TILE, y * TILE);
+			game->wall, x * 64, y * 64);
 	else if (tile == 'P')
 		mlx_put_image_to_window(game->mlx, game->win,
-			game->player, x * TILE, y * TILE);
+			game->player, x * 64, y * 64);
 	else if (tile == 'C')
 		mlx_put_image_to_window(game->mlx, game->win,
-			game->collect, x * TILE, y * TILE);
+			game->collect, x * 64, y * 64);
 	else if (tile == 'E')
 		mlx_put_image_to_window(game->mlx, game->win,
-			game->exit, x * TILE, y * TILE);
+			game->exit, x * 64, y * 64);
 }
 
 void	draw_map(t_game *game)
@@ -69,7 +69,7 @@ void	draw_map(t_game *game)
 		{
 			tile = game->map[y][x];
 			mlx_put_image_to_window(game->mlx, game->win,
-				game->floor, x * TILE, y * TILE);
+				game->floor, x * 64, y * 64);
 			put_tile_image(game, tile, x, y);
 			x++;
 		}
@@ -80,7 +80,6 @@ void	draw_map(t_game *game)
 int close_window(t_game *game)
 {
 	free_all(game);
-	exit(0);
 	return (0);
 }
 
@@ -91,6 +90,7 @@ int	main(int ac, char **av)
 	ft_memset(&game, 0, sizeof(t_game));
 	if (ac != 2)
 		error_exit("Uso: ./so_long map.ber");
+	game.map_file = av[1];
 	game.map = read_map(av[1]);
 	if (!game.map)
     	error_exit("Failed to read map");
@@ -122,7 +122,7 @@ int	init_game(t_game *game)
 	game->mlx = mlx_init();
 	if (!game->mlx)
     	return (0);
-	game->win = mlx_new_window(game->mlx, TILE * game->map_width, TILE * game->map_height, "So Long");
+	game->win = mlx_new_window(game->mlx, 64 * game->map_width, 64 * game->map_height, "So Long");
 	if (!game->win)
 	{
 		mlx_destroy_display(game->mlx);

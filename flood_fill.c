@@ -6,7 +6,7 @@
 /*   By: yasmin <yasmin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 17:43:59 by yasmin            #+#    #+#             */
-/*   Updated: 2025/06/11 19:49:17 by yasmin           ###   ########.fr       */
+/*   Updated: 2025/06/11 20:27:42 by yasmin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,12 @@ static int flood_fill(char **map, int x, int y, t_flood *flood, int num_collecti
     if (map[y][x] == 'C')
         flood->collectibles++;
     if (map[y][x] == 'E')
+	{
         flood->exit_reachable = 1;
-
-    // Marque como visitado
+	}
     map[y][x] = '1';
 	if (flood->collectibles == num_collectibles && flood->exit_reachable)
 		return (1);
-    // Propague para todas as direções
     if (flood_fill(map, x + 1, y, flood, num_collectibles))
 	{
         return (1);
@@ -83,6 +82,7 @@ int validate_path(t_game *game)
     flood.exit_reachable = 0;    
     result = flood_fill(map_copy, game->player_pos.x, game->player_pos.y, &flood, game->num_collect);  
 	free_map(map_copy);  
+	ft_printf("%d \n", result);
     if (!result)
         error_exit("No valid path");
     return (result);
