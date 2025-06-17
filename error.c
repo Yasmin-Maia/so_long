@@ -3,19 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yasmin <yasmin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ymaia-do <ymaia-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:07:18 by yasmin            #+#    #+#             */
-/*   Updated: 2025/06/12 16:20:44 by yasmin           ###   ########.fr       */
+/*   Updated: 2025/06/17 12:06:28 by ymaia-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	error_exit(char *msg)
+void	error_exit(char *msg, char **map, t_game *game)
 {
-	ft_putendl_fd("Error", 2);
-	ft_putendl_fd(msg, 2);
+	if (map && !game)
+		free_map(map);
+	free_all(game);
+	ft_putstr_fd("Error\n", 2);
+	if (msg)
+		ft_putendl_fd(msg, 2);
 	exit(1);
 }
 

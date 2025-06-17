@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yasmin <yasmin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ymaia-do <ymaia-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:22:18 by yasmin            #+#    #+#             */
-/*   Updated: 2025/06/12 15:33:18 by yasmin           ###   ########.fr       */
+/*   Updated: 2025/06/17 11:45:55 by ymaia-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef struct s_game
 	void	*floor;
 }	t_game;
 
-void	error_exit(char *msg);
+void	error_exit(char *msg, char **map, t_game *game);
 void	destroy_images(t_game *game);
 void	free_map(char **map);
 void	free_all(t_game *game);
@@ -68,15 +68,14 @@ void	free_all(t_game *game);
 char	**read_map(char *file);
 int		get_map_height(char *file);
 int		get_map_width(char *file);
-void	find_player_position(t_game *game);
 void	count_map_dimensions(t_game *game);
 
 void	draw_map(t_game *game);
 int		main(int ac, char **av);
 int		init_game(t_game *game);
+void	find_player_position(t_game *game);
 
-
-int	validate_map(t_game *game);
+int		validate_map(t_game *game);
 
 int		retangular_map(char **map);
 void	elements(char **map, int *player, int *exit, int *collectible);

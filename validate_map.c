@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_map.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yasmin <yasmin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ymaia-do <ymaia-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:39:34 by yasmin            #+#    #+#             */
-/*   Updated: 2025/06/11 17:46:16 by yasmin           ###   ########.fr       */
+/*   Updated: 2025/06/17 12:01:36 by ymaia-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,12 +136,24 @@ static int	check_chars(char **map)
 int	validate_map(t_game *game)
 {
 	if (!check_rectangular(game->map))
-		error_exit("Map is not rectangular");
+	{
+		ft_putstr_fd("Map is not rectangular", 2);
+		return (0);
+	}
 	if (!check_elements(game->map))
-		error_exit("Invalid elements count");
+	{
+		ft_putstr_fd("Invalid elements count", 2);
+		return (0);
+	}
 	if (!check_surrounded(game->map))
-		error_exit("Map not surrounded by walls");
+	{
+		ft_putstr_fd("Map not surrounded by walls", 2);
+		return (0);
+	}
 	if (!check_chars(game->map))
-		error_exit("Invalid characters in map");
+	{
+		ft_putstr_fd("Invalid characters in map", 2);
+		return (0);
+	}
 	return (1);
 }

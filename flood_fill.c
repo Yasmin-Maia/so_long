@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flood_fill.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yasmin <yasmin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ymaia-do <ymaia-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 17:43:59 by yasmin            #+#    #+#             */
-/*   Updated: 2025/06/11 20:27:42 by yasmin           ###   ########.fr       */
+/*   Updated: 2025/06/17 12:02:08 by ymaia-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,11 @@ int validate_path(t_game *game)
     flood.exit_reachable = 0;    
     result = flood_fill(map_copy, game->player_pos.x, game->player_pos.y, &flood, game->num_collect);  
 	free_map(map_copy);  
-	ft_printf("%d \n", result);
     if (!result)
-        error_exit("No valid path");
+	{
+        ft_putstr_fd("No valid path", 2);
+		return (0);
+	}
     return (result);
 }
 

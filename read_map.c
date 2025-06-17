@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yasmin <yasmin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ymaia-do <ymaia-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 14:21:53 by yasmin            #+#    #+#             */
-/*   Updated: 2025/06/12 16:20:32 by yasmin           ###   ########.fr       */
+/*   Updated: 2025/06/17 11:50:43 by ymaia-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	get_map_height(char *file)
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		error_exit("Error to open map");
+		error_exit("Error to open map", NULL, NULL);
 	height = 0;
 	line = get_next_line(fd);
 	while (line)
@@ -48,8 +48,6 @@ int	get_map_height(char *file)
 		height++;
 		line = get_next_line(fd);
 	}
-	close(fd);
-	fd = open(file, O_RDONLY);
 	gnl_clear(fd);
 	close(fd);
 	return (height);
@@ -77,12 +75,12 @@ char **read_map(char *file)
     height = get_map_height(file);
     fd = open(file, O_RDONLY);
     if (fd < 0)
-        error_exit("Error to open map");
+        error_exit("Error to open map", NULL, NULL);
     map = malloc(sizeof(char *) * (height + 1));
     if (!map)
     {
         close(fd);
-        error_exit("memory error");
+        error_exit("memory error", map, NULL);
     }
     i = 0;
     while (i < height)
@@ -95,7 +93,7 @@ char **read_map(char *file)
             free(map);
             gnl_clear(fd);
             close(fd);
-            error_exit("Error reading the map line.");
+            error_exit("Error reading the map line.", map, NULL);
         }
         if (map[i][ft_strlen(map[i]) - 1] == '\n')
             map[i][ft_strlen(map[i]) - 1] = '\0';
@@ -128,5 +126,5 @@ void	find_player_position(t_game *game)
 		}
 		y++;
 	}
-	error_exit("Posição inicial do jogador não encontrada!");
+	error_exit("Posição inicial do jogador não encontrada!", game->map, NULL);
 }
