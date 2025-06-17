@@ -6,7 +6,7 @@
 /*   By: ymaia-do <ymaia-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 18:48:15 by yasmin            #+#    #+#             */
-/*   Updated: 2025/06/17 15:14:34 by ymaia-do         ###   ########.fr       */
+/*   Updated: 2025/06/17 16:31:57 by ymaia-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	close_window(t_game *game)
 {
 	free_all(game);
-	return (0);
+	exit (0);
 }
 
 static int	is_ber(const char *filename)
@@ -32,9 +32,9 @@ int	main(int ac, char **av)
 
 	ft_memset(&game, 0, sizeof(t_game));
 	if (ac != 2)
-		error_exit("Error: Uso: ./so_long map.ber\n", NULL, NULL);
+		error_exit("Error: Uso: ./so_long map.ber", NULL, NULL);
 	if (!is_ber(av[1]))
-		error_exit("Error: Please insert file .ber\n", NULL, NULL);
+		error_exit("Error: Please insert file .ber", NULL, NULL);
 	game.map_file = av[1];
 	game.map = read_map(av[1]);
 	if (!game.map)

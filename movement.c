@@ -6,7 +6,7 @@
 /*   By: ymaia-do <ymaia-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:46:47 by yasmin            #+#    #+#             */
-/*   Updated: 2025/06/03 18:49:25 by ymaia-do         ###   ########.fr       */
+/*   Updated: 2025/06/17 16:29:45 by ymaia-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void	move_player(t_game *game, int dx, int dy)
 int	handle_keypress(int keycode, t_game *game)
 {
 	if (keycode == 65307)
-		exit(0);
+		close_window(game);
 	else if (keycode == 119 || keycode == 65362)
 		move_player(game, 0, -1);
 	else if (keycode == 115 || keycode == 65364)

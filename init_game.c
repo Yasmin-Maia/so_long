@@ -6,7 +6,7 @@
 /*   By: ymaia-do <ymaia-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 12:47:53 by ymaia-do          #+#    #+#             */
-/*   Updated: 2025/06/17 15:06:03 by ymaia-do         ###   ########.fr       */
+/*   Updated: 2025/06/17 16:37:17 by ymaia-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ void	find_player_position(t_game *game)
 		}
 		y++;
 	}
-	error_exit("Error: Player's initial position not found!\n", game->map, NULL);
+	error_exit("Error: Player's initial position not found!\n",
+		game->map, NULL);
 }
 
 void	count_map_dimensions(t_game *game)
