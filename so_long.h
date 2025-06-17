@@ -6,7 +6,7 @@
 /*   By: ymaia-do <ymaia-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:22:18 by yasmin            #+#    #+#             */
-/*   Updated: 2025/06/17 11:45:55 by ymaia-do         ###   ########.fr       */
+/*   Updated: 2025/06/17 15:02:38 by ymaia-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,13 @@ typedef struct s_pos
 	int	x;
 	int	y;
 }	t_pos;
+
+typedef struct s_valid
+{
+	int	colletibles_found;
+	int	total_collectibles;
+	int	exit_found;
+}	t_valid;
 
 typedef struct s_game
 {
@@ -60,33 +67,45 @@ typedef struct s_game
 	void	*floor;
 }	t_game;
 
+int		check_rectangular(char **map);
+int		check_elements(char **map);
+int		check_walls(char *line);
+int		check_surrounded(char **map);
+int		check_chars(char **map);
+
+int		load_sprites(t_game *game);
+void	put_tile_image(t_game *game, char tile, int x, int y);
+void	draw_map(t_game *game);
+
 void	error_exit(char *msg, char **map, t_game *game);
-void	destroy_images(t_game *game);
+
+int		validate_path(t_game *game);
+
 void	free_map(char **map);
+void	destroy_images(t_game *game);
 void	free_all(t_game *game);
 
-char	**read_map(char *file);
-int		get_map_height(char *file);
-int		get_map_width(char *file);
-void	count_map_dimensions(t_game *game);
-
-void	draw_map(t_game *game);
-int		main(int ac, char **av);
-int		init_game(t_game *game);
 void	find_player_position(t_game *game);
+void	count_map_dimensions(t_game *game);
+int		init_game(t_game *game);
 
-int		validate_map(t_game *game);
-
-int		retangular_map(char **map);
-void	elements(char **map, int *player, int *exit, int *collectible);
-int		required_elements(char **map);
-int		check_top_bottom(char *line);
+int		close_window(t_game *game);
+int		main(int ac, char **av);
 
 int		handle_keypress(int keycode, t_game *game);
 int		count_collectibles(char **map);
 
-int		validate_path(t_game *game);
-int		validate_char(char **map);
 void	gnl_clear(int fd);
+int		get_map_height(char *file);
+
+char	**read_map(char *file);
+
+int		retangular_map(char **map);
+int		check_top_bottom(char *line);
+
+void	count_elements(char **map, int *p, int *e, int *c);
+void	elements(char **map, int *player, int *exit, int *collectible);
+int		required_elements(char **map);
+int		validate_map(t_game *game);
 
 #endif

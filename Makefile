@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yasmin <yasmin@student.42.fr>              +#+  +:+       +#+         #
+#    By: ymaia-do <ymaia-do@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/02 16:45:00 by yasmin            #+#    #+#              #
-#    Updated: 2025/06/10 18:35:03 by yasmin           ###   ########.fr        #
+#    Updated: 2025/06/17 12:57:16 by ymaia-do         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ FT_PRINTF_DIR = ./libft/ft_printf
 GNL_DIR = ./libft/get_next_line
 
 # Sources and Objects
-SRCS = main.c read_map.c validate_map_utils.c validate_map.c error.c movement.c flood_fill.c
+SRCS = check_validate.c draw_map.c error.c flood_fill.c free.c init_game.c main.c movement.c read_map_utils.c read_map.c validate_map_utils.c validate_map.c  
 OBJS = $(SRCS:.c=.o)
 
 # Get_next_line and Ft_printf

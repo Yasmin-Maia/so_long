@@ -6,41 +6,32 @@
 /*   By: ymaia-do <ymaia-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 17:43:59 by yasmin            #+#    #+#             */
-/*   Updated: 2025/06/17 12:02:08 by ymaia-do         ###   ########.fr       */
+/*   Updated: 2025/06/17 15:06:15 by ymaia-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static int flood_fill(char **map, int x, int y, t_flood *flood, int num_collectibles)
+static int	flood_fill(char **map, int x, int y, t_valid *valid)
 {
 	if (map[y][x] == '1')
 		return (0);
-    if (map[y][x] == 'C')
-        flood->collectibles++;
-    if (map[y][x] == 'E')
-	{
-        flood->exit_reachable = 1;
-	}
-    map[y][x] = '1';
-	if (flood->collectibles == num_collectibles && flood->exit_reachable)
+	if (map[y][x] == 'C')
+		valid->colletibles_found++;
+	if (map[y][x] == 'E')
+		valid->exit_found = 1;
+	map[y][x] = '1';
+	if (valid->colletibles_found == valid->total_collectibles
+		&& valid->exit_found)
 		return (1);
-    if (flood_fill(map, x + 1, y, flood, num_collectibles))
-	{
-        return (1);
-	}
-	if (flood_fill(map, x - 1, y, flood, num_collectibles))
-    {
-	    return (1);
-	}
-	if (flood_fill(map, x, y + 1, flood, num_collectibles))
-    {
-	    return (1);
-	}
-	if (flood_fill(map, x, y - 1, flood, num_collectibles))
-    {
-	    return (1);
-	}
+	if (flood_fill(map, x + 1, y, valid))
+		return (1);
+	if (flood_fill(map, x - 1, y, valid))
+		return (1);
+	if (flood_fill(map, x, y + 1, valid))
+		return (1);
+	if (flood_fill(map, x, y - 1, valid))
+		return (1);
 	return (0);
 }
 
@@ -69,24 +60,25 @@ static char	**copy_map(t_game *game)
 	return (copy);
 }
 
-int validate_path(t_game *game)
+int	validate_path(t_game *game)
 {
-    char    **map_copy;
-    t_flood flood;
-    int     result;
+	char	**map_copy;
+	t_valid	valid;
+	int		result;
 
-    map_copy = copy_map(game);
-    if (!map_copy)
-        return (0);
-    flood.collectibles = 0;
-    flood.exit_reachable = 0;    
-    result = flood_fill(map_copy, game->player_pos.x, game->player_pos.y, &flood, game->num_collect);  
-	free_map(map_copy);  
-    if (!result)
+	map_copy = copy_map(game);
+	if (!map_copy)
+		return (0);
+	valid.colletibles_found = 0;
+	valid.exit_found = 0;
+	valid.total_collectibles = game->num_collect;
+	result = flood_fill(map_copy, game->player_pos.x,
+			game->player_pos.y, &valid);
+	free_map(map_copy);
+	if (!result)
 	{
-        ft_putstr_fd("No valid path", 2);
+		ft_putstr_fd("Error: No valid path\n", 2);
 		return (0);
 	}
-    return (result);
+	return (result);
 }
-
